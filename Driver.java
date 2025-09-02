@@ -17,6 +17,7 @@ public class Driver implements Directions {
 		// LEAVE THIS ALONE!!!!!!
 		Driver d = new Driver();
 
+		roomba = new Robot (7,6,East,0);
   /**
 	 * This section of code gets info from the user in the following order: 1. Ask the user
 	 * which world file they wish to process. Right now, that world file name is
@@ -32,7 +33,7 @@ public class Driver implements Directions {
 
     String wrldName = "basicRoom.wld";
 
-		World.readWorld(wrldName);
+	World.readWorld(wrldName);
     World.setVisible(true);
 
     
@@ -45,9 +46,51 @@ public class Driver implements Directions {
 
 		// the line below causes a null pointer exception
 		// what is that and why are we getting it?
+		//roomba.move();
+
+	
+	while (roomba.frontIsClear()) {
+
+		while (roomba.nextToABeeper()) {
+
+			roomba.pickBeeper();
+
+		}
+
 		roomba.move();
 
 
+		if (roomba.frontIsClear() != true){
+			//check for the east wall
+			if (roomba.facingEast()){
+				roomba.turnLeft();//facing north
+				if(roomba.frontIsClear() != true) {
+					System.out.println("end of code from east");
+				} else {
+					roomba.move();
+					roomba.turnLeft();
+				}
+					
+			} else if (roomba.facingWest()){ //check for the west wall
+				roomba.turnLeft();
+				roomba.turnLeft();
+				roomba.turnLeft();//facing north
+				if (roomba.frontIsClear()){
+					System.out.println("end of the code from west");
+				} else {
+					roomba.move();
+					roomba.turnLeft();
+					roomba.turnLeft();
+					roomba.turnLeft();//facing east
+				}
+				
+			}
+				
+
+		}
+
+
+	}
   
 
 
