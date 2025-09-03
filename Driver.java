@@ -128,6 +128,9 @@ public class Driver implements Directions {
 	System.out.println("The total number of piles: " + numberOfPiles);
 	System.out.println("The total number of beepers are: " + totalBeepers);
 	System.out.println("The biggest pile was: " + maxBeepersInAPile);
+	//System.out.println("The location of the largest pile: ");
+	System.out.println("average of all the piles sizes: " + (double) totalBeepers/numberOfPiles);
+	System.out.println("Percent of dirty to clean: " + (((double)numberOfPiles/areaTotal)* 100) + "%");
 
   }
 
