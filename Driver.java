@@ -30,6 +30,10 @@ public class Driver implements Directions {
 	 */
 
 	int numberOfPiles = 0;
+
+	int maxBeepersInAPile = 0;
+
+	int newNumberInPile = 0;
 	
 	int areaTotal = 1;
 
@@ -55,10 +59,12 @@ public class Driver implements Directions {
 
 		if (roomba.nextToABeeper()) {
 			numberOfPiles += 1;
+			newNumberInPile = 0; 
 		}
 		while (roomba.nextToABeeper()) {
 			roomba.pickBeeper();
 			totalBeepers += 1;
+			newNumberInPile += 1;
 		}
 
 		roomba.move();
@@ -91,16 +97,26 @@ public class Driver implements Directions {
 				}
 			}
 		}
+	
+		if (newNumberInPile > maxBeepersInAPile) {
+			maxBeepersInAPile = newNumberInPile;
+		}
 	}
   
 
 	if (roomba.nextToABeeper()) {
 		numberOfPiles += 1;
+		newNumberInPile = 0;
 	}
 
 	while (roomba.nextToABeeper()) {
 		roomba.pickBeeper();
 		totalBeepers += 1;
+		newNumberInPile += 1;
+	}
+
+	if (newNumberInPile > maxBeepersInAPile) {
+		maxBeepersInAPile = newNumberInPile;
 	}
 
   	/** This method displays the results of cleaning the room.  All of the info
@@ -111,7 +127,7 @@ public class Driver implements Directions {
 	System.out.println("The area of the room is: " + areaTotal);
 	System.out.println("The total number of piles: " + numberOfPiles);
 	System.out.println("The total number of beepers are: " + totalBeepers);
-	//System.out.println("The biggest pile was: " + );
+	System.out.println("The biggest pile was: " + maxBeepersInAPile);
 
   }
 
