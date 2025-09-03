@@ -9,10 +9,8 @@ public class Driver implements Directions {
 // It will be assigned a value in the getInfo method
 	private static Robot roomba; 
 
-
 	// You will add very many variables!!
 
-	
 	public static void main(String[] args) {
 		// LEAVE THIS ALONE!!!!!!
 		Driver d = new Driver();
@@ -31,13 +29,18 @@ public class Driver implements Directions {
 	 * JOptionPane.
 	 */
 
+	int numberOfPiles = 0;
+	
+	int areaTotal = 1;
+
+	int totalBeepers = 0;
+
     String wrldName = "basicRoom.wld";
 
 	World.readWorld(wrldName);
     World.setVisible(true);
 
-    
-
+    World.setDelay(5);
 
 	/** This section will have all the logic that takes the Robot to every location 
 	 * and cleans up all piles of beepers.  Think about ways you can break this
@@ -48,17 +51,18 @@ public class Driver implements Directions {
 		// what is that and why are we getting it?
 		//roomba.move();
 
-	
 	while (roomba.frontIsClear()) {
 
+		if (roomba.nextToABeeper()) {
+			numberOfPiles += 1;
+		}
 		while (roomba.nextToABeeper()) {
-
 			roomba.pickBeeper();
-
+			totalBeepers += 1;
 		}
 
 		roomba.move();
-
+		areaTotal += 1;
 
 		if (roomba.frontIsClear() != true){
 			//check for the east wall
@@ -68,6 +72,7 @@ public class Driver implements Directions {
 					System.out.println("end of code from east");
 				} else {
 					roomba.move();
+					areaTotal += 1;
 					roomba.turnLeft();
 				}
 					
@@ -75,41 +80,38 @@ public class Driver implements Directions {
 				roomba.turnLeft();
 				roomba.turnLeft();
 				roomba.turnLeft();//facing north
-				if (roomba.frontIsClear()){
+				if (roomba.frontIsClear() != true){
 					System.out.println("end of the code from west");
 				} else {
 					roomba.move();
+					areaTotal += 1;
 					roomba.turnLeft();
 					roomba.turnLeft();
 					roomba.turnLeft();//facing east
 				}
-				
 			}
-				
-
 		}
-
-
 	}
   
 
+	if (roomba.nextToABeeper()) {
+		numberOfPiles += 1;
+	}
 
-
-
+	while (roomba.nextToABeeper()) {
+		roomba.pickBeeper();
+		totalBeepers += 1;
+	}
 
   	/** This method displays the results of cleaning the room.  All of the info
 	 * in the pdf that describes the problem need to be displayed.  You can present
 	 * this info in the console (boring) or you can present using JOptionPane (cool!)
 	 */
 
-    System.out.println("The biggest pile was ");
-
-
-
-
-
-
-
+	System.out.println("The area of the room is: " + areaTotal);
+	System.out.println("The total number of piles: " + numberOfPiles);
+	System.out.println("The total number of beepers are: " + totalBeepers);
+	//System.out.println("The biggest pile was: " + );
 
   }
 
