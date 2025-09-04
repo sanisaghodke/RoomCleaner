@@ -1,3 +1,4 @@
+import java.lang.reflect.AccessFlag;
 import java.util.Scanner;  //may be necessary for input
 
 import javax.swing.JOptionPane;  //may be necessary for input
@@ -38,6 +39,10 @@ public class Driver implements Directions {
 	int areaTotal = 1;
 
 	int totalBeepers = 0;
+
+	int avenueForMaxCoordinates = 0;
+
+	int streetForMaxCoordinates = 0;
 
     String wrldName = "basicRoom.wld";
 
@@ -98,11 +103,12 @@ public class Driver implements Directions {
 			}
 		}
 	
-		if (newNumberInPile > maxBeepersInAPile) {
+		if (newNumberInPile > maxBeepersInAPile) { // If the current pile has the max number of beepers in it
 			maxBeepersInAPile = newNumberInPile;
+			avenueForMaxCoordinates = roomba.avenue();
+			streetForMaxCoordinates = roomba.street();
 		}
 	}
-  
 
 	if (roomba.nextToABeeper()) {
 		numberOfPiles += 1;
@@ -117,6 +123,8 @@ public class Driver implements Directions {
 
 	if (newNumberInPile > maxBeepersInAPile) {
 		maxBeepersInAPile = newNumberInPile;
+		avenueForMaxCoordinates = roomba.avenue();
+		streetForMaxCoordinates = roomba.street();
 	}
 
   	/** This method displays the results of cleaning the room.  All of the info
@@ -124,11 +132,23 @@ public class Driver implements Directions {
 	 * this info in the console (boring) or you can present using JOptionPane (cool!)
 	 */
 
+
+	JOptionPane.showMessageDialog(null,
+														"The Area of the room is: " + areaTotal + "\n"
+														+ "The total number of piles: " + numberOfPiles + "\n"
+														+ "The total number of beepers are: " + totalBeepers + "\n"
+														+ "The biggest pile was: " + maxBeepersInAPile + "\n"
+														+ "The location of the largest pile: " + "(" + avenueForMaxCoordinates + ", " + streetForMaxCoordinates + ")" + "\n"
+														+ "Average of all the piles sizes: " + (double) totalBeepers/numberOfPiles + "\n"
+														+ "Percent of dirty to clean: " + (((double)numberOfPiles/areaTotal)* 100) + "%" + "\n"
+														,"Results", JOptionPane.INFORMATION_MESSAGE);
+
+
 	System.out.println("The area of the room is: " + areaTotal);
 	System.out.println("The total number of piles: " + numberOfPiles);
 	System.out.println("The total number of beepers are: " + totalBeepers);
 	System.out.println("The biggest pile was: " + maxBeepersInAPile);
-	//System.out.println("The location of the largest pile: ");
+	System.out.println("The location of the largest pile: " + "(" + avenueForMaxCoordinates + ", " + streetForMaxCoordinates + ")");
 	System.out.println("average of all the piles sizes: " + (double) totalBeepers/numberOfPiles);
 	System.out.println("Percent of dirty to clean: " + (((double)numberOfPiles/areaTotal)* 100) + "%");
 
